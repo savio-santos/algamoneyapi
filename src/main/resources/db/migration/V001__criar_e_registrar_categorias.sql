@@ -1,8 +1,7 @@
-CREATE TABLE categoria(
+CREATE TABLE  IF NOT EXISTS categoria(
     id BIGINT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
- 
-   	PRIMARY KEY(id)
+ 	PRIMARY KEY(id)
  )ENGINE=InnoDB default CHARSET=utf8;
  
  INSERT INTO categoria (nome) VALUES('lazer');

@@ -13,18 +13,19 @@ import org.springframework.stereotype.Service;
 
 import com.savio.algamoneyapi.model.Categoria;
 import com.savio.algamoneyapi.repository.CategoriaRepository;
-
+import com.savio.algamoneyapi.service.exception.ObjectNotFoundException;
 @Service
 public class CategoriaService {
 
 	@Autowired
 	private CategoriaRepository repo;
 
-	public Categoria find(Integer id) {
+	public Categoria find(Long id) {
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.get();
-
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: "
+		+ id + ", Tipo: " + Categoria.class.getName()));
 	}
+
 
 	public List<Categoria> findAll() {
 		return repo.findAll();
@@ -44,11 +45,15 @@ public class CategoriaService {
 
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 
-		find(id);
-		repo.deleteById(id);
+		//try {
+			find(id);
+			repo.deleteById(id);
 
+	//	} catch (DataIntegrityViolationException e) {
+	//		throw new DataIntegrityViolationException("Não é póssivel excluir uma categoria que contém produtos.");
+	//	}
 	}
 
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
