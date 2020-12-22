@@ -14,29 +14,28 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.savio.algamoneyapi.event.RecursoCriadoEvent;
-import com.savio.algamoneyapi.model.Pessoa;
-import com.savio.algamoneyapi.service.PessoaService;
+import com.savio.algamoneyapi.model.Lancamento;
+import com.savio.algamoneyapi.service.LancamentoService;
 
 @RestController
-@RequestMapping(value = "/pessoas")
-public class PessoaResource {
+@RequestMapping(value = "/lancamentos")
+public class LancamentoResource {
 
 	@Autowired
-	PessoaService pessoaService;
+	LancamentoService lancamentoService;
 
 	@Autowired
 	private ApplicationEventPublisher publisher; // responsavel por pegar o evando de criação de recurso
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Pessoa>> findById(@PathVariable Long id) {
+	public ResponseEntity<Optional<Lancamento>> findById(@PathVariable Long id) {
 
-		Optional<Pessoa> obj = Optional.of(pessoaService.find(id));
+		Optional<Lancamento> obj = Optional.of(lancamentoService.find(id));
 
 		if (obj.isPresent()) {
 			return ResponseEntity.ok(obj);
@@ -48,35 +47,22 @@ public class PessoaResource {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Pessoa>> findAll() {
-		List<Pessoa> list = pessoaService.findAll();
+	public ResponseEntity<List<Lancamento>> findAll() {
+		List<Lancamento> list = lancamentoService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@PostMapping
-	public ResponseEntity<Pessoa> insert(@Valid @RequestBody Pessoa obj, HttpServletResponse response) {
-		obj = pessoaService.insert(obj);
+	public ResponseEntity<Lancamento> insert(@Valid @RequestBody Lancamento obj, HttpServletResponse response) {
+		obj = lancamentoService.insert(obj);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, obj.getId()));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(obj);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Pessoa> update(@PathVariable Long id, @RequestBody @Valid Pessoa pessoa) {
-		pessoa.setId(id);
-		return ResponseEntity.ok(pessoaService.update(pessoa));
-
-	}
-
-	@PutMapping("/{id}/ativo")
-	public ResponseEntity<Pessoa> updateAtivo(@PathVariable Long id, @RequestBody Boolean ativo) {
-		// pessoaService.updateAtivo(id,ativo);
-		return ResponseEntity.ok(pessoaService.updateAtivo(id, ativo));
-	}
-
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Pessoa> delete(@PathVariable Long id) {
-		pessoaService.delete(id);
+	public ResponseEntity<Lancamento> delete(@PathVariable Long id) {
+		lancamentoService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 

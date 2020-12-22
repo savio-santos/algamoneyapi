@@ -16,4 +16,7 @@ INSERT INTO pessoa (nome,ativo,logradouro,numero,complemento,bairro,cep,cidade,e
  VALUES('savio',1,'Rua abaíra','15','usf Salvlador','arraial','41204105','salvador','BA');
  
  INSERT INTO pessoa (nome,ativo,logradouro,numero,complemento,bairro,cep,cidade,estado)
- VALUES('rosemeire',1,'Rua abaíra','15','usf Salvlador','arraial','41204105','salvador','BA');
+ VALUES('joao',1,'Rua abaíra','15','usf Salvlador','arraial','41204105','salvador','BA');
+ 
+ INSERT INTO pessoa (nome,ativo,logradouro,numero,complemento,bairro,cep,cidade,estado)
+ VALUES('maria',1,'Rua abaíra','15','usf Salvlador','arraial','41204105','salvador','BA');

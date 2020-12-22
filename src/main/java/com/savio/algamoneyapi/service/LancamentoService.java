@@ -5,64 +5,62 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.savio.algamoneyapi.model.Pessoa;
-import com.savio.algamoneyapi.repository.PessoaRepository;
+import com.savio.algamoneyapi.model.Lancamento;
+import com.savio.algamoneyapi.repository.LancamentoRepository;
 import com.savio.algamoneyapi.service.exception.ObjectNotFoundException;
 
 @Service
-public class PessoaService {
+public class LancamentoService {
 
 	@Autowired
-	private PessoaRepository repo;
+	private LancamentoRepository repo;
 
-	public Pessoa find(Long id) {
-		Optional<Pessoa> obj = repo.findById(id);
+	public Lancamento find(Long id) {
+		Optional<Lancamento> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pessoa.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Lancamento.class.getName()));
 	}
 
-	public List<Pessoa> findAll() {
+	public List<Lancamento> findAll() {
 		return repo.findAll();
 	}
 
 	@Transactional
-	public Pessoa insert(Pessoa obj) {
+	public Lancamento insert(Lancamento obj) {
 
 		return repo.save(obj);
 
 	}
 
-	public Pessoa update(Pessoa obj) {
-		Pessoa pessoaSalva = find(obj.getId());
-		BeanUtils.copyProperties(obj, pessoaSalva, "id");
-		return repo.save(pessoaSalva);
+	public Lancamento update(Lancamento obj) {
+		Lancamento cat = find(obj.getId());
+		// falta implementar
+		return repo.save(obj);
 
 	}
 
 	public void delete(Long id) {
 
+		// try {
 		find(id);
 		repo.deleteById(id);
 
+		// } catch (DataIntegrityViolationException e) {
+		// throw new DataIntegrityViolationException("Não é póssivel excluir uma
+		// categoria que contém produtos.");
+		// }
 	}
 
-	public Page<Pessoa> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Lancamento> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
-	}
-
-	public Pessoa updateAtivo(Long id, Boolean ativo) {
-		Pessoa pessoaSalva = find(id);
-		pessoaSalva.setAtivo(ativo);
-		return repo.save(pessoaSalva);
 	}
 
 }
