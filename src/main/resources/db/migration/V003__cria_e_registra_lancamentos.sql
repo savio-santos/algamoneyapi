@@ -19,4 +19,4 @@ INSERT INTO lancamento (descricao,data_vencimento,data_pagamento,valor, observac
 INSERT INTO lancamento (descricao,data_vencimento,data_pagamento,valor, observacao, tipo,categoria_id,pessoa_id) 
 	   VALUES ('Manutenção carro', '2017-05-01', '2017-05-01', 349.99,  null, 'DESPESA',1,2);
 INSERT INTO lancamento (descricao,data_vencimento,data_pagamento,valor, observacao, tipo,categoria_id,pessoa_id) 
-	   VALUES ('Estorno compra', '2017-05-10', '2017-05-11', 599.90,  null, 'RECEITA',3,3);
+	   VALUES ('Estorno compra', '2017-05-10', '2017-05-11', 599.90,  null, 'RECEITA',3,2);

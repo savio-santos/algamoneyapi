@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.savio.algamoneyapi.event.RecursoCriadoEvent;
 import com.savio.algamoneyapi.model.Lancamento;
+import com.savio.algamoneyapi.repository.filter.LancamentoFilter;
 import com.savio.algamoneyapi.service.LancamentoService;
 
 @RestController
@@ -46,11 +49,18 @@ public class LancamentoResource {
 		}
 	}
 
-	@GetMapping
-	public ResponseEntity<List<Lancamento>> findAll() {
-		List<Lancamento> list = lancamentoService.findAll();
-		return ResponseEntity.ok().body(list);
+//	@GetMapping
+//	public ResponseEntity<List<Lancamento>> findAll() {
+//		List<Lancamento> list = lancamentoService.findAll();
+//		return ResponseEntity.ok().body(list);
+
+	
+	@GetMapping()
+	public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable pageable) {
+		return lancamentoService.search( filter, pageable);
+		
 	}
+	
 
 	@PostMapping
 	public ResponseEntity<Lancamento> insert(@Valid @RequestBody Lancamento obj, HttpServletResponse response) {

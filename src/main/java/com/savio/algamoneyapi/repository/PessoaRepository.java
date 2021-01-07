@@ -8,4 +8,6 @@ import com.savio.algamoneyapi.model.Pessoa;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 
+	Pessoa findByEmail(String email);
+
 }

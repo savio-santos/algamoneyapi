@@ -25,7 +25,7 @@ public class PessoaService {
 	public Pessoa find(Long id) {
 		Optional<Pessoa> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pessoa.class.getName()));
+				"Pessoa não encontrada! Id: " + id));
 	}
 
 	public List<Pessoa> findAll() {

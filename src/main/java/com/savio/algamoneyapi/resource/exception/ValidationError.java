@@ -13,7 +13,7 @@ public class ValidationError extends StandardError {
 	}
 
 	public ValidationError(Integer status, String msg, Long timeStamped) {
-		super(status, msg, timeStamped);
+		super(status, msg,null, timeStamped);
 	}
 
 	public List<FieldMessage> getErrors() {
